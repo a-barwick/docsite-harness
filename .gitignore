@@ -1,0 +1,4 @@
+trials/logs/
+trials/results/
+.DS_Store
+__pycache__/
