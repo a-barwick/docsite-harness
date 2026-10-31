@@ -60,7 +60,7 @@ h1:hover .copy-link,h2:hover .copy-link,h3:hover .copy-link,.step .t:hover .copy
 .go{display:block;text-decoration:none;color:inherit}
 .go:hover{border-color:var(--c1)}
 .go b{display:block;font-size:15px;margin-bottom:2px}
-.go span{font-size:13px;color:var(--ink2)}
+.go>span{font-size:13px;color:var(--ink2)}
 .say{background:var(--card);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:8px 13px;display:inline-block;font-size:14px;margin:2px 0}
 .say.me{border-radius:14px 14px 4px 14px;background:var(--c1-bg);border-color:#cdd2ff}
 .shot{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:var(--radius-s);margin-bottom:8px}
@@ -221,6 +221,8 @@ pre{overflow-x:auto;max-width:100%}
   .card{overflow-x:auto}
   .trace>.card{overflow-x:visible}
   svg.wide{min-width:600px}
+  /* a shadow at the edge shows that a wide diagram scrolls */
+  .card:has(>svg.wide){background:linear-gradient(to right,var(--card) 30%,transparent) left/28px 100% no-repeat local,linear-gradient(to left,var(--card) 30%,transparent) right/28px 100% no-repeat local,radial-gradient(farthest-side at 0 50%,rgba(30,36,48,.18),transparent) left/10px 100% no-repeat scroll,radial-gradient(farthest-side at 100% 50%,rgba(30,36,48,.18),transparent) right/10px 100% no-repeat scroll,var(--card)}
   .shots{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:560px){

@@ -27,11 +27,11 @@ List `docs/site/` and read `nav` in `docs/site/site-config.js`. Search the site 
 
 ## 3. Get the facts from the code
 
-Read the code on the current branch before you write a claim. The code decides what's built. `docs/site/AGENTS.md` says what decides what's planned.
+Read the code on this branch before you write a claim, and don't use notes from other sessions as a source. The code decides what's built. `docs/site/AGENTS.md` says what decides what's planned.
 
 - Keep a list of the files each fact came from, and use it for the Sources section.
 - Don't guess a name, limit, endpoint, field or default. If you can't confirm one, leave it out or add it to `open-questions.html`.
-- Mark anything that isn't on the default branch as `designed`. Never describe planned work as running.
+- Mark anything that isn't in this branch's code as `designed`. Never describe planned work as running.
 - Select the facts a reader needs. For each number, name or setting, ask what a reader would do with it, and cut it if there's no answer. Test files, queue sizes, flush timeouts and fallback orders usually go.
 
 ## 4. Choose the visual, then outline
@@ -83,7 +83,7 @@ Run the review checks on each page you changed, and fix every failure:
 python3 .agents/skills/review-docs/scripts/check.py docs/site/your-page.html --render
 ```
 
-`--render` saves screenshots at 1440 and 375 px and prints their paths. Open them if your tools can read images. A check that passes doesn't replace looking at the page. If Chrome won't start, say so.
+`--render` saves screenshots at 1440 and 375 px and prints their paths. Open them if your tools can read images. A check that passes doesn't replace looking at the page. If a sandbox stops Chrome, ask to run the command outside the sandbox, and if you still can't render, say so.
 
 Then follow `.agents/skills/review-docs/SKILL.md` on your own page. Fix what you find, and cut anything the checks warn about unless you have a reason to keep it.
 

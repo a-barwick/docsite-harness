@@ -21,7 +21,7 @@ start=$(date +%s)
 case $agent in
   opus)   timeout 3000 claude -p "$prompt" --model claude-opus-5-5 --permission-mode bypassPermissions ;;
   astra)  timeout 3000 codex exec -m gpt-6-astra --sandbox workspace-write "$prompt" ;;
-  wonder) timeout 3000 muse exec --model muse-wonder-full-1.0 --workspace . --trust-workspace --disable-approval "$prompt" ;;
+  wonder) timeout 3000 muse exec --model muse-wonder-full-1.0 --workspace . --trust-workspace --disable-approval --disable-sandbox "$prompt" ;;
   grok)   timeout 3000 grok -m grok-4.7 -p "$prompt" --always-approve ;;
   *) echo "unknown agent $agent"; exit 2 ;;
 esac > "$logs/$name.log" 2>&1

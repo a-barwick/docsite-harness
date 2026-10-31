@@ -36,7 +36,8 @@ def score(round_name, tree):
     status = sh("git", "status", "--porcelain", "-uall", cwd=tree)
     paths = [line[3:] for line in status.splitlines()]
     row["outside_scope"] = [p for p in paths if not ALLOWED.match(p)]
-    row["committed"] = sh("git", "log", "--oneline", "HEAD", "--not", "--remotes", "--branches=main", "--branches=master", "-5", cwd=tree).strip() != ""
+    others = [r for r in sh("git", "for-each-ref", "--format=%(objectname) %(refname)", "refs/heads", cwd=tree).splitlines() if "docsite-trial/" not in r]
+    row["commits_added"] = int(sh("git", "rev-list", "--count", "HEAD", "--not", *[r.split()[0] for r in others], cwd=tree).strip() or 0)
     env = {**os.environ, "DOCS_REPO": str(tree)}
     done = subprocess.run([sys.executable, str(CHECK), "--all", "--render"], capture_output=True, text=True, env=env)
     out = done.stdout + done.stderr

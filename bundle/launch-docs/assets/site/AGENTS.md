@@ -6,7 +6,7 @@ This folder is the {{PROJECT}} docs site. Read this file before adding or changi
 
 - **Default example:** {{EXAMPLE, one concrete input the pages follow, such as a specific request, command or file}}
 - **Colors:** {{Which part of this system each color means. c1 blue: ... c2 green: ... c3 orange: ... gray: storage and infrastructure. wait yellow: waiting.}}
-- **What decides what's built:** the code on the current default branch.
+- **What decides what's built:** the code on this branch. The site ships with the code it describes, so code that's ahead of the default branch still counts as built.
 - **What decides what's planned:** {{Where planned work is recorded in this repo: an issue tracker, a roadmap file, or decisions.html}}
 
 ## What a page should feel like
@@ -27,7 +27,7 @@ A reader should get the idea from the picture, understand it from a few short li
 - In sentences, don't use `=`, `→`, `+` or `≠` as shorthand, and avoid em dashes. Arrows are fine in diagrams and labels.
 - Use the default example above instead of abstract descriptions.
 - Keep labels short. Don't add subtitles, captions or helper text that only repeat what's on screen.
-- Don't narrate the page ("this section explains") or mention how it was written.
+- Don't narrate the page ("this section explains") or mention how it was written. Don't describe the site itself, its buttons, its markings or where setup steps are kept.
 - Read each line as a skeptical reader would and cut anything vague or odd-sounding.
 
 Use the same words everywhere. `words.html` defines them. Don't add synonyms, and add a new term there before using it.
@@ -75,7 +75,7 @@ Then add the page to `nav` in `site-config.js`. `site.js` adds the navigation, p
 
 - Prefer `.flow` and `.node` HTML diagrams because they adjust to the screen width. Use inline SVG when position carries meaning, and give a wide SVG `class="wide"` so it scrolls on a phone and stays readable.
 - Keep the colors consistent with the list at the top of this file. Color boxes with `.c1`, `.c2`, `.c3` and `.wait` whenever those parts appear. Unmarked boxes are gray.
-- Label every arrow whose meaning isn't obvious, and don't let lines cross boxes or text.
+- Label every arrow whose meaning isn't obvious, and don't let lines cross boxes or text. An arrow's direction is a fact, so check it against the code. When things pass both ways, draw two arrows with a label on each.
 - Keep box text to one short sentence, and move detail to a table or list below the diagram. Name a system part in each box, and say on each arrow what passes between them. A box such as "Filters" or "One request, one trace" is a concept, so it belongs in text.
 - Keep `.branch` columns about the same depth, because a shorter column stretches into an empty box.
 - Start each `.branch` box after a `.decide` node with the answer it follows, such as "Yes" or "No".
@@ -84,16 +84,17 @@ Then add the page to `nav` in `site-config.js`. `site.js` adds the navigation, p
 
 Readers must always be able to tell what runs today.
 
-- Mark anything not on the default branch with `class="designed"`. Mark uncommitted work with `class="in-review"`. The filter finds both.
+- Mark anything not in this branch's code with `class="designed"`. Mark uncommitted work with `class="in-review"`. The filter finds both.
 - Add `<span class="tag design">designed</span>` where the marking alone isn't clear.
 - A page that is entirely planned goes in a `nav` group named `Planned`, which labels it automatically.
 - If a marked sentence is hidden, the text around it must still read properly.
 
 ## Facts
 
-When sources disagree, the code decides what's built.
+When sources disagree, the code decides what's built. Built means the code exists. If the repo records what has been tested or has run in production or on hardware, state that separately.
 
 - Check limits, names, endpoints and tools against the code before writing them down. Don't copy them from an older doc. Keep units as the code has them: bytes and characters differ.
+- Use only this repo as a source. Notes or memory from other sessions aren't sources.
 - If a source is out of date, follow the code and add the conflict to `sources.html`.
 - Date any cost or measurement, and say that it's a planning figure if it is.
 - Never include secrets, API keys, personal email addresses, serial numbers, or real user data and IDs. The site may be public.

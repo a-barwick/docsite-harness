@@ -21,7 +21,7 @@ The app in `patterns.html` is made up. Copy its markup and none of its names or 
 
 ## 2. Read the repo
 
-Facts come from the code. Older docs tell you where to look and what people intended, and the code decides what's true.
+Facts come from the code on this branch. Older docs tell you where to look and what people intended, and the code decides what's true. Notes or memory from other sessions aren't sources.
 
 - Read the README, any `AGENTS.md` or `CLAUDE.md`, the manifests and the file tree, then the entry points, and follow the main path through the code by hand.
 - Read the existing docs and the last 30 commit subjects. Note where they disagree with the code.
@@ -50,7 +50,7 @@ Size the site to the repo, and stop at the size below. A small site with every c
 
 | Page | File | Answers | Visual |
 | --- | --- | --- | --- |
-| **Overview** | `index` | What is this, and what are its parts? | System picture with the parts in color, then the example in a few lines |
+| **Overview** | `index` | What is this, and what are its parts? | One connected picture with every part in color and an arrow for what passes between them, then the example as a short list. If the repo records what has run for real, add a table of that |
 | **Following the example** | your choice, such as `request` | What happens to one input, step by step? | `.trace`: numbered steps with a step map that follows the scroll. A Data button on each step if data crosses a boundary |
 | **System** | `system` | What does each part own, and how do they connect? | Parts diagram, then one table row per part |
 | **One page per subsystem** | your choice | How does this part work? | Flow, state diagram or table, whichever shows it |
@@ -61,7 +61,7 @@ Size the site to the repo, and stop at the size below. A small site with every c
 | **Words we use** | `words` | What does this word mean here? | Table |
 | **Sources** | `sources` | What else exists, and where does it disagree with the code? | Table of existing docs with their state, then the mismatches |
 
-Planned work you find in docs or issues goes in a `nav` group named `Planned`, or is marked `designed` on the page it belongs to. Never describe it as running.
+Code on this branch counts as built, even if the branch is ahead of the default branch. Work that exists only in docs or issues goes in a `nav` group named `Planned`, or is marked `designed` on the page it belongs to. Never describe it as running.
 
 ## 4. Set up the kit
 
@@ -111,8 +111,8 @@ python3 .agents/skills/review-docs/scripts/check.py --all --render
 ```
 
 - Fix every `FAIL`. Fix each `WARN` unless you can say why it's fine.
-- Open the screenshots at both widths if your tools can read images, starting with Overview and the example page. Fix anything clipped, overlapping, crossing or stretched empty. If Chrome won't start, say so, and don't claim you looked.
-- Follow `.agents/skills/review-docs/SKILL.md` for at least the Overview, System and example pages. Check five claims on each against the code.
+- Open the screenshots at both widths if your tools can read images, starting with Overview and the example page. Fix anything clipped, overlapping, crossing or stretched empty. If a sandbox stops Chrome, ask to run the command outside the sandbox. If you still can't render, say so, and don't claim you looked.
+- Follow `.agents/skills/review-docs/SKILL.md` for at least the Overview, System and example pages. Check five claims on each against the code, and the direction of every arrow in the Overview and System diagrams.
 - Start `docs/serve.sh` in the background, fetch the index page once to confirm it responds, and stop the server unless you were asked to leave it running.
 
 ## 8. Report

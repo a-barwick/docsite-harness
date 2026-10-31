@@ -35,7 +35,8 @@ Read `docs/site/AGENTS.md` and `.agents/skills/plain-writing/SKILL.md`, then ans
 Pick at least five specific claims on each page, and prefer names, numbers and statements about order. Open the code for each one. Also check that:
 
 - The listed sources exist and support the page.
-- Anything not on the default branch is marked `designed` and reads properly when hidden.
+- Anything not in this branch's code is marked `designed` and reads properly when hidden.
+- Each arrow in a diagram points the way the data goes in the code.
 - Examples are made up and include no secrets, personal data or real IDs.
 
 ## 4. Look at it

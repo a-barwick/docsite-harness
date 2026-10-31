@@ -28,6 +28,8 @@ VISUAL_CLASSES = {"flow", "states", "shots", "grid2", "grid3", "map", "trace", "
 RAW = {"code", "pre", "script", "style", "svg"}
 VOID = {"br", "hr", "img", "input", "link", "meta", "path", "circle", "rect", "line", "polygon"}
 WIDTHS = (1440, 375)
+BLOCKS = {"p", "li", "h1", "h2", "h3"}
+INLINE = {"a", "b", "i", "em", "strong", "code", "span", "small", "br", "sub", "sup"}
 
 PHRASES = [
     (r"—", "em dash"),
@@ -39,6 +41,7 @@ PHRASES = [
     (r"\b(?:real|actual) (?:work|question|point|problem)\b", "empty emphasis"),
     (r"\b(?:load-bearing|seamless\w*|robust\w*|leverag\w+|delve\w*|game-chang\w+|under the hood|the heart of|backbone)\b", "stock phrase"),
     (r"\b(?:this (?:section|page) (?:explains|describes|covers)|it's worth noting|in short|simply put)\b", "narration"),
+    (r"\b(?:data buttons?|this site|these pages|the other pages|designed markings?|the readme (?:retains|keeps|holds))\b", "describes the site itself"),
 ]
 PRAISE = r"\b(?:real|really|actual|actually|honest|honestly|true|truly|trust\w*|natural\w*|feels?|useful|meaningful\w*|powerful)\b"
 SHORTHAND = r"\s(?:=|→|\+|≠)\s"
@@ -72,10 +75,12 @@ class Page(HTMLParser):
             self.code_now = []
         if tag not in VOID:
             self.stack.append(tag)
-        if tag in ("p", "li") and self.block is None:
+        if tag in BLOCKS and self.block is None:
             self.block = []
+            self.kind = tag
 
     in_sources = False
+    kind = "p"
 
     def handle_endtag(self, tag):
         if tag == "code" and self.code_now is not None:
@@ -87,9 +92,9 @@ class Page(HTMLParser):
         if tag in self.stack:
             while self.stack.pop() != tag:
                 pass
-        if tag in ("p", "li") and self.block is not None and tag not in self.stack:
-            if not {"p", "li"} & set(self.stack):
-                self.prose.append("".join(self.block).strip())
+        if tag in BLOCKS and self.block is not None and tag not in self.stack:
+            if not BLOCKS & set(self.stack):
+                self.prose.append(("".join(self.block).strip(), self.kind))
                 self.block = None
 
     def handle_data(self, data):
@@ -225,10 +230,20 @@ def check(path, name, nav):
 
     if re.search(r"[\w.+-]+@[\w-]+\.\w+|\bsk-[A-Za-z0-9]{8,}|/Users/\w+|/home/\w+", source):
         fails.append("possible email address, API key or personal path")
+    if re.search(r"\b(?:192\.168|10\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01]))\.\d{1,3}\.\d{1,3}\b", source):
+        fails.append("possible private network address")
 
     check_code_names(page, fails, warns)
 
-    for block in page.prose:
+    run = 0
+    for tag, _ in page.order:
+        if tag in INLINE:
+            continue
+        run = run + 1 if tag == "p" else 0
+        if run == 3:
+            warns.append("three paragraphs in a row: use a list, a table or a diagram")
+
+    for block, kind in page.prose:
         short = block if len(block) < 90 else block[:87] + "..."
         for pattern, label in PHRASES:
             if re.search(pattern, block, re.I):
@@ -239,7 +254,7 @@ def check(path, name, nav):
             warns.append(f"check '{match}' states a fact: {short}")
         if re.search(SHORTHAND, block):
             warns.append(f"symbol used as shorthand: {short}")
-        if len(re.findall(r"[.!?](?:\s|$)", block)) > 3:
+        if len(re.findall(r"[.!?](?:\s|$)", block)) > (2 if kind == "p" else 3):
             warns.append(f"long paragraph, use a list or split it: {short}")
     return words, fails, warns
 
@@ -345,6 +360,12 @@ def check_site(nav):
         fails.append("nav has no index page")
     if "words" not in nav:
         fails.append("nav has no words page")
+    for script in SITE.glob("*.js"):
+        if script.name in ("site.js", "site-config.js"):
+            continue
+        for source in re.findall(r"""['"]?source['"]?\s*:\s*['"]([^'"]+)['"]""", script.read_text(encoding="utf-8")):
+            if not path_exists(source.split(",")[0].strip()):
+                fails.append(f"{script.name}: source doesn't exist in the repo: {source}")
     return fails
 
 
@@ -383,7 +404,7 @@ def main(argv):
     if every:
         print(f"site: {len(paths)} pages, {total} words")
     if renderer and renderer.problem:
-        print(f"RENDER NOT DONE: {renderer.problem}. Say so in your report, and don't claim you viewed the pages.")
+        print(f"RENDER NOT DONE: {renderer.problem}. Ask to run this command outside the sandbox. If you can't, say so in your report, and don't claim you viewed the pages.")
     return 1 if failed else 0
 
 
