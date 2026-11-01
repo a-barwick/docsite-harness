@@ -93,9 +93,9 @@
   <path d="M400 94 L536 126" stroke="#5b6474" stroke-width="2" fill="none" marker-end="url(#m)"/><text x="462" y="130" text-anchor="middle" font-size="12" fill="#4a5163">jobs</text>
 </svg></div></section>
 
-<!-- A set of things. One row per thing, one column per property, with a short name first. data-flow adds a Data button. -->
+<!-- A set of things. One row per thing, one column per property, with a short name first. data-flow adds a Data button. class="stack" stacks the rows on a phone, so use it with three or more columns. -->
 <section><h2>Table: a set of things</h2>
-<div class="card"><table>
+<div class="card"><table class="stack">
   <tr><th>Job</th><th>Runs</th><th>What it changes</th></tr>
   <tr><td>Preview</td><td>After each new link</td><td>Saves the page title on the link.</td></tr>
   <tr data-flow="expire"><td>Sweep</td><td>Hourly</td><td>Deletes links past their expiry date.</td></tr>

@@ -125,6 +125,7 @@ table{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0 4px}
 th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);border-bottom:2px solid var(--line)}
 td:first-child{font-weight:600}
+td:first-child code{overflow-wrap:normal}
 td.nw,th.nw{white-space:nowrap}
 .map td:first-child{font-weight:550;width:46%}
 
@@ -217,6 +218,7 @@ pre{overflow-x:auto;max-width:100%}
   nav.rail .brand{display:flex;justify-content:space-between;align-items:center}
   .menu-btn{display:inline-block}
   .legend{position:static}
+  .map td:first-child{width:32%}
   .branch,.branch3{grid-template-columns:minmax(0,1fr)}
   .card{overflow-x:auto}
   .trace>.card{overflow-x:visible}
@@ -227,4 +229,11 @@ pre{overflow-x:auto;max-width:100%}
 }
 @media (max-width:560px){
   .grid3,.grid4,.branch4{grid-template-columns:minmax(0,1fr)}
+  /* a table with class stack turns each row into a block, labeled from its header */
+  table.stack,table.stack tbody{display:block}
+  table.stack tr:has(th){display:none}
+  table.stack tr{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+  table.stack tr:last-child{border-bottom:0}
+  table.stack td{display:block;border:0;padding:3px 0}
+  table.stack td:not(:first-child)[data-label]::before{content:attr(data-label);display:block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
 }

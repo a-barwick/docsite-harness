@@ -199,6 +199,12 @@ main.querySelectorAll('tr[data-flow]').forEach(row => {
   row.cells[0].append(dataButton(open => { extra.hidden = !open; }));
 });
 
+// Stacked tables take each cell's label from the header row
+main.querySelectorAll('table.stack').forEach(table => {
+  const labels = [...table.querySelectorAll('tr:first-child th')].map(th => th.textContent.trim());
+  table.querySelectorAll('tr').forEach(row => [...row.cells].forEach((cell, i) => { if (labels[i] && cell.tagName === 'TD') cell.dataset.label = labels[i]; }));
+});
+
 // Step map: lights up the systems the current step uses. window.TRACE holds { names, steps, data }.
 if (document.querySelector('.trace')) {
   const { names = {}, steps: TRACE = [], data = [] } = window.TRACE ?? {};

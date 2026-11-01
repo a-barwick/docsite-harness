@@ -63,6 +63,7 @@ Then add the page to `nav` in `site-config.js`. `site.js` adds the navigation, p
 - Split a page that passes about 800 words into pages by topic. Reference pages such as Decisions can run longer.
 - Don't list every value just because the code has it. Leave out what a reader can't act on, such as queue sizes, flush timeouts and fallback chains. Put long lists of tokens, limits or fields in one `details.more` section.
 - Give each question one section. Two tables that both answer "where does this go" should be one table.
+- A table with three or more columns gets `class="stack"`, which stacks each row on a phone.
 - In a table, each row describes one thing and each column is a property of it. Don't line up unrelated items in the same row. The first column renders bold, so keep it to a short name.
 - Describe the system. Setup steps and instructions for contributors or agents belong in `AGENTS.md` or a README.
 - Every heading gets a copy-link icon automatically. Only the icon is interactive, so don't make headings or subtitles clickable. Link IDs come from the heading text, so renaming a heading breaks old links to it.
@@ -75,7 +76,7 @@ Then add the page to `nav` in `site-config.js`. `site.js` adds the navigation, p
 
 - Prefer `.flow` and `.node` HTML diagrams because they adjust to the screen width. Use inline SVG when position carries meaning, and give a wide SVG `class="wide"` so it scrolls on a phone and stays readable.
 - Keep the colors consistent with the list at the top of this file. Color boxes with `.c1`, `.c2`, `.c3` and `.wait` whenever those parts appear. Unmarked boxes are gray.
-- Label every arrow whose meaning isn't obvious, and don't let lines cross boxes or text. An arrow's direction is a fact, so check it against the code. When things pass both ways, draw two arrows with a label on each.
+- In a `.trace` map, lines stay unlabeled because the caption above the map says what passes. Elsewhere, label every arrow whose meaning isn't obvious, and don't let lines cross boxes or text. An arrow's direction is a fact, so check it against the code. When things pass both ways, draw two arrows with a label on each.
 - Keep box text to one short sentence, and move detail to a table or list below the diagram. Name a system part in each box, and say on each arrow what passes between them. A box such as "Filters" or "One request, one trace" is a concept, so it belongs in text.
 - Keep `.branch` columns about the same depth, because a shorter column stretches into an empty box.
 - Start each `.branch` box after a `.decide` node with the answer it follows, such as "Yes" or "No".
