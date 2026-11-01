@@ -97,7 +97,7 @@ When sources disagree, the code decides what's built. Built means the code exist
 - Use only this repo as a source. Notes or memory from other sessions aren't sources.
 - If a source is out of date, follow the code and add the conflict to `sources.html`.
 - Date any cost or measurement, and say that it's a planning figure if it is.
-- Never include secrets, API keys, personal email addresses, serial numbers, or real user data and IDs. The site may be public.
+- Never include secrets, API keys, personal email addresses, serial numbers, deploy preview hostnames, account names, or real user data and IDs. The site may be public.
 - Record each new design decision in `decisions.html`, with its date and what was rejected. Add unresolved questions to `open-questions.html`, and remove them once settled.
 
 ## Data buttons

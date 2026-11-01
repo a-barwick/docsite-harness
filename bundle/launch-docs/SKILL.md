@@ -50,7 +50,7 @@ Size the site to the repo, and stop at the size below. A small site with every c
 
 | Page | File | Answers | Visual |
 | --- | --- | --- | --- |
-| **Overview** | `index` | What is this, and what are its parts? | One connected picture with every part in color and an arrow for what passes between them, then the example as a short list. If the repo records what has run for real, add a table of that |
+| **Overview** | `index` | What is this, and what are its parts? | One connected picture with every part in color, each part shown once, and an arrow for what passes between them. The sequence of steps belongs on the example page. If the app has a screen and the repo has a screenshot, copy it to `docs/site/img/` and show it first. Then the example as a short list. If the repo records what has run for real, add a table of that |
 | **Following the example** | your choice, such as `request` | What happens to one input, step by step? | `.trace`: numbered steps with a step map that follows the scroll. A Data button on each step if data crosses a boundary |
 | **System** | `system` | What does each part own, and how do they connect? | Parts diagram, then one table row per part |
 | **One page per subsystem** | your choice | How does this part work? | Flow, state diagram or table, whichever shows it |

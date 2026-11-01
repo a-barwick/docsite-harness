@@ -128,9 +128,12 @@ def known_classes():
 
 def in_repo(token):
     """True if the text appears in tracked or untracked repo files outside the docs site and its tooling."""
+    if not re.search(r"[*…<>{}]", token) and (ROOT / token).exists():
+        return True
+    tag = subprocess.run(["git", "rev-parse", "-q", "--verify", f"refs/tags/{token}"], cwd=ROOT, capture_output=True)
     done = subprocess.run(["git", "grep", "-qIF", "--untracked", "-e", token, "--", ":!docs/site", ":!.agents", ":!.claude"],
                           cwd=ROOT, capture_output=True)
-    return done.returncode == 0
+    return tag.returncode == 0 or done.returncode == 0
 
 
 def path_exists(path):
@@ -232,6 +235,14 @@ def check(path, name, nav):
         fails.append("possible email address, API key or personal path")
     if re.search(r"\b(?:192\.168|10\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01]))\.\d{1,3}\.\d{1,3}\b", source):
         fails.append("possible private network address")
+    if re.search(r"[\w-]+\.(?:vercel\.app|netlify\.app|run\.app|fly\.dev|ngrok\.\w+)\b", source):
+        warns.append("deploy or preview hostname: leave it out, because the site may be public")
+    if stem in ("index", "system"):
+        for flow in source.split('class="flow"')[1:]:
+            labels = re.findall(r'class="node[^"]*">\s*<b>([^<]+)</b>', flow.split('class="card"')[0])
+            repeated = sorted({label for label in labels if labels.count(label) > 1})
+            if repeated:
+                warns.append(f"{', '.join(repeated)} appears twice in a diagram: show each part once here, and put the sequence on the example page")
 
     check_code_names(page, fails, warns)
 
