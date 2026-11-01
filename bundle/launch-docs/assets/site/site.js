@@ -57,13 +57,13 @@ if (filtered.length && !PLANNED.includes(current)) {
   main.querySelector('.lede').after(bar);
   const buttons = bar.querySelectorAll('button');
   const status = bar.querySelector('#viewStatus');
-  const noun = filtered.length === 1 ? 'item' : 'items';
+  const items = filtered.length === 1 ? "1 item on this page that isn't" : `${filtered.length} items on this page that aren't`;
   const setView = view => {
     buttons.forEach(b => b.classList.toggle('on', b.dataset.view === view));
     document.body.classList.toggle('only-impl', view === 'impl');
     document.body.classList.toggle('only-design', view === 'design');
-    status.textContent = view === 'impl' ? `Hiding ${filtered.length} ${noun} on this page that aren't built yet.`
-      : view === 'design' ? `Highlighting ${filtered.length} ${noun} on this page that aren't built yet.` : '';
+    status.textContent = view === 'impl' ? `Hiding ${items} built yet.`
+      : view === 'design' ? `Highlighting ${items} built yet.` : '';
     try { localStorage.setItem('docs-view', view); } catch {}
   };
   buttons.forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));

@@ -234,6 +234,7 @@ pre{overflow-x:auto;max-width:100%}
   table.stack tr:has(th){display:none}
   table.stack tr{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
   table.stack tr:last-child{border-bottom:0}
+  table.stack tr[hidden]{display:none}
   table.stack td{display:block;border:0;padding:3px 0}
   table.stack td:not(:first-child)[data-label]::before{content:attr(data-label);display:block;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
 }
