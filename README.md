@@ -53,7 +53,8 @@ In the last trial, three sites passed `check.py` with no failures. A review agai
 | --- | --- | --- |
 | `docs/site/AGENTS.md` | Page rules, with the project's example and colors | Yes |
 | `docs/site/site-config.js` | Site name and navigation | Yes |
-| `docs/site/site.js`, `docs/site/site.css` | Navigation, step maps, Data buttons and styles | No |
+| `docs/site/site.js` | Navigation, step maps and Data buttons | No |
+| `docs/site/site.css` | Styles | Only if a page needs a style the shared file lacks |
 | `docs/serve.sh` | Local web server | No |
 
 ## What `check.py` finds
