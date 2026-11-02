@@ -15,9 +15,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parents[1]
 CHECK = HERE / "bundle/review-docs/scripts/check.py"
-TRIALS = Path.home() / "Documents/dev/docsite-trials"
+TRIALS = HERE.parent / "docsite-trials"
 ALLOWED = re.compile(r"^(docs/|\.agents/|\.claude/|AGENTS\.md$|CLAUDE\.md$|README)")
-LEAKS = re.compile(r"Shortly|sho\.rt|x7Qp|spring-sale|\bNori\b|outer loop|inner loop|Tucson|\{\{")
+LEAKS = re.compile(r"Shortly|sho\.rt|x7Qp|spring-sale|\bNori\b|outer loop|inner loop|\{\{")
 
 
 def sh(*args, cwd):

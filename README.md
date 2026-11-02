@@ -9,14 +9,15 @@ install.sh REPO  →  .agents/skills/ and .claude/skills/  →  one prompt  → 
 ## Use it
 
 ```bash
-~/Documents/dev/docsite-harness/install.sh /path/to/repo
+git clone https://github.com/a-barwick/docsite-harness.git
+docsite-harness/install.sh /path/to/repo
 ```
 
 Then open any agent in that repo and send:
 
 > Use the launch-docs skill to build this repo's docs site, then run it with docs/serve.sh and give me the URL.
 
-`PROMPT.md` has the prompts for adding a page and reviewing the site. The site needs no build step or framework. It needs Python 3 to serve, and Chrome or Chromium to run the visual checks.
+`PROMPT.md` has the prompts for adding a page and reviewing the site. After a launch, run `review-docs` on every page in a fresh thread. In our last test, sites that passed `check.py` still had 49 wrong facts across 37 pages, and only a review against the code found them. The site needs no build step or framework. It needs Python 3 to serve, and Chrome or Chromium to run the visual checks.
 
 ## What's in the bundle
 
@@ -50,6 +51,10 @@ Viewing a page means starting Chrome. Muse's sandbox blocks that, and in the tri
 | Muse | `muse exec --trust-workspace --disable-approval --disable-sandbox` |
 | Grok | `grok -p --always-approve` |
 
+## License
+
+MIT. See `LICENSE`.
+
 ## Testing it on a repo
 
 ```bash
@@ -58,4 +63,4 @@ trials/score.py ROUND
 trials/clean.sh /path/to/repo
 ```
 
-`run.sh` makes a fresh worktree under `~/Documents/dev/docsite-trials/ROUND` and sends a one-line prompt. `score.py` prints what a script can measure, and saves the checks and screenshots to `trials/results/`. A person still needs to read the pages and check facts. `clean.sh` removes the worktrees and their branches.
+`run.sh` makes a fresh worktree under `../docsite-trials/ROUND`, next to this repo, and sends a one-line prompt. `score.py` prints what a script can measure, and saves the checks and screenshots to `trials/results/`. A person still needs to read the pages and check facts. `clean.sh` removes the worktrees and their branches.

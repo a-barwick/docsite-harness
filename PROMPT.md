@@ -6,7 +6,7 @@ Launch a repo's site, after `install.sh`:
 
 Or install and launch in one prompt, from an agent running in the repo:
 
-> Run ~/Documents/dev/docsite-harness/install.sh . then use the launch-docs skill to build this repo's docs site, run it with docs/serve.sh and give me the URL.
+> Run /path/to/docsite-harness/install.sh . then use the launch-docs skill to build this repo's docs site, run it with docs/serve.sh and give me the URL.
 
 After launch, name the skill and the topic. Choosing the page is part of the skill.
 

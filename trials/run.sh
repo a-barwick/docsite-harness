@@ -1,13 +1,13 @@
 #!/bin/bash
 # Runs one blind launch: a fresh worktree, the bundle, and a one-line prompt.
 # Usage: trials/run.sh ROUND /path/to/repo AGENT [PROMPT]
-# AGENT is opus, astra, wonder or grok. Output goes to trials/logs/ROUND and the worktree to ~/Documents/dev/docsite-trials/ROUND.
+# AGENT is opus, astra, wonder or grok. Output goes to trials/logs/ROUND and the worktree to ../docsite-trials/ROUND, next to this repo.
 set -u
 round=$1; repo=$(cd "$2" && pwd); agent=$3
 prompt=${4:-"Use the launch-docs skill to build this repo's docs site. Leave your changes uncommitted."}
 here=$(cd "$(dirname "$0")/.." && pwd)
 name=$(basename "$repo")-$agent
-tree=$HOME/Documents/dev/docsite-trials/$round/$name
+tree=$(dirname "$here")/docsite-trials/$round/$name
 logs=$here/trials/logs/$round
 mkdir -p "$logs" "$(dirname "$tree")"
 
