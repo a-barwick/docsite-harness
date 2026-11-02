@@ -1,36 +1,62 @@
 # Docsite harness
 
-A skill bundle and a prompt that give any repo its own docs site: pictures first, plain writing, facts checked against the code.
+Four agent skills and a one-line prompt build a static docs site for a git repo, then review its pages against the code.
 
-```text
-install.sh REPO  →  .agents/skills/ and .claude/skills/  →  one prompt  →  docs/site/  →  docs/serve.sh
+```mermaid
+flowchart TD
+  install["install.sh"] -->|copies the skills| skills[".agents/skills and .claude/skills"]
+  skills -->|launch prompt to an agent| launch["launch-docs"]
+  launch -->|HTML pages| site["docs/site"]
+  site -->|pages to read| review["review-docs, in a fresh thread"]
+  review -->|wrong facts to fix| site
+  site -->|files on 127.0.0.1| serve["docs/serve.sh"]
 ```
 
-## Use it
+## Install and launch
+
+The site has no build step or framework. Serving it takes Python 3, and the visual checks take Chrome or Chromium.
 
 ```bash
 git clone https://github.com/a-barwick/docsite-harness.git
+```
+
+```bash
 docsite-harness/install.sh /path/to/repo
 ```
 
-Then open any agent in that repo and send:
+Send this to an agent running in that repo:
 
 > Use the launch-docs skill to build this repo's docs site, then run it with docs/serve.sh and give me the URL.
 
-`PROMPT.md` has the prompts for adding a page and reviewing the site. After a launch, run `review-docs` on every page in a fresh thread. In our last test, sites that passed `check.py` still had 49 wrong facts across 37 pages, and only a review against the code found them. The site needs no build step or framework. It needs Python 3 to serve, and Chrome or Chromium to run the visual checks.
+## Review after every launch
 
-## What's in the bundle
+Send this in a fresh thread:
 
-| Skill | Job |
+> Use the review-docs skill to review the site. Report findings only.
+
+In the last trial, three sites passed `check.py` with no failures. A review against the code then found 49 wrong facts across their 37 pages.
+
+`PROMPT.md` has the prompt for adding a page.
+
+## Skills
+
+| Skill | What it does |
 | --- | --- |
-| `launch-docs` | Reads the repo, plans the pages, copies the kit, writes the site and checks it. Holds the kit and the component gallery. |
+| `launch-docs` | Reads the repo, plans the pages, copies the site files, writes the pages and checks them. |
 | `write-docs` | Adds or changes one page, and chooses where it goes. |
-| `review-docs` | Reviews a page against the code and the rules. Holds `check.py`. |
-| `plain-writing` | The sentence rules, with rejected lines from past reviews. |
+| `review-docs` | Checks a page against the code and the page rules, using `check.py`. |
+| `plain-writing` | Lists the sentence rules, with lines that past reviews rejected. |
 
-The page rules are copied to `docs/site/AGENTS.md` in each repo with that project's example and colors filled in, so each repo has one copy. `site.js` and `site.css` are the same in every repo, and `site-config.js` holds the site's name and navigation.
+## Files added to a repo
 
-## What `check.py` catches
+| File | Contents | Varies by repo |
+| --- | --- | --- |
+| `docs/site/AGENTS.md` | Page rules, with the project's example and colors | Yes |
+| `docs/site/site-config.js` | Site name and navigation | Yes |
+| `docs/site/site.js`, `docs/site/site.css` | Navigation, step maps, Data buttons and styles | No |
+| `docs/serve.sh` | Local web server | No |
+
+## What `check.py` finds
 
 | Check | Examples |
 | --- | --- |
@@ -40,27 +66,44 @@ The page rules are copied to `docs/site/AGENTS.md` in each repo with that projec
 | Writing | Slogans, praise words, long paragraphs, text describing the site itself |
 | Privacy | Email addresses, API keys, home directory paths, private network addresses, deploy preview hostnames |
 
-## Permissions
+`check.py` can't judge whether a sentence is true, so a clean run doesn't replace the review.
 
-Viewing a page means starting Chrome. Muse's sandbox blocks that, and in the trials Muse shipped a diagram with lines crossing its labels until the sandbox was turned off. In Codex's sandbox the first render fails, and later renders in the same run succeeded in the trials.
+## Agent permissions
 
-| Agent | What the trials ran |
+Viewing a page starts Chrome. Muse's sandbox blocks Chrome, so Muse needs its sandbox off to view its pages. In Codex's sandbox, the first render failed and later renders in the same run succeeded.
+
+The trials ran these commands in throwaway worktrees. Most of them turn off permission prompts.
+
+| Agent | Command |
 | --- | --- |
 | Claude Code | `claude -p --permission-mode bypassPermissions` |
 | Codex | `codex exec --sandbox workspace-write` |
 | Muse | `muse exec --trust-workspace --disable-approval --disable-sandbox` |
 | Grok | `grok -p --always-approve` |
 
-## License
-
-MIT. See `LICENSE`.
-
-## Testing it on a repo
+<details>
+<summary>Running a trial</summary>
 
 ```bash
 trials/run.sh ROUND /path/to/repo opus
+```
+
+```bash
 trials/score.py ROUND
+```
+
+```bash
 trials/clean.sh /path/to/repo
 ```
 
-`run.sh` makes a fresh worktree under `../docsite-trials/ROUND`, next to this repo, and sends a one-line prompt. `score.py` prints what a script can measure, and saves the checks and screenshots to `trials/results/`. A person still needs to read the pages and check facts. `clean.sh` removes the worktrees and their branches.
+| Script | What it does |
+| --- | --- |
+| `run.sh` | Makes a worktree in `../docsite-trials/ROUND` and sends the launch prompt to `opus`, `astra`, `wonder` or `grok`. |
+| `score.py` | Prints what a script can measure, and saves the checks and screenshots to `trials/results/`. It doesn't check whether the facts are right. |
+| `clean.sh` | Removes the worktrees and their `docsite-trial/*` branches. |
+
+</details>
+
+## License
+
+MIT. See `LICENSE`.
