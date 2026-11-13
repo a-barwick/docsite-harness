@@ -8,6 +8,8 @@ Or install and launch in one prompt, from an agent running in the repo:
 
 > Run /path/to/docsite-harness/install.sh . then use the launch-docs skill to build this repo's docs site, run it with docs/serve.sh and give me the URL.
 
+The agent stops once to show the outline. To skip that, add "Don't wait for outline approval" to either prompt.
+
 After launch, name the skill and the topic. Choosing the page is part of the skill.
 
 > Use the write-docs skill: document how the worker retries a failed job.

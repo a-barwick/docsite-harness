@@ -28,6 +28,8 @@ Send this to an agent running in that repo:
 
 > Use the launch-docs skill to build this repo's docs site, then run it with docs/serve.sh and give me the URL.
 
+The agent reads the code, then sends an outline of nav groups and pages and waits. Each page line says the question the page answers and the code behind it. Reply with changes or approve it. The pages follow the outline, so this is the cheapest point to add a missing area or split a group.
+
 ## Review after every launch
 
 Send this in a fresh thread:
@@ -42,8 +44,8 @@ In the last trial, three sites passed `check.py` with no failures. A review agai
 
 | Skill | What it does |
 | --- | --- |
-| `launch-docs` | Reads the repo, plans the pages, copies the site files, writes the pages and checks them. |
-| `write-docs` | Adds or changes one page, and chooses where it goes. |
+| `launch-docs` | Reads the repo, proposes an outline and waits for approval, copies the site files, writes the pages and checks them. |
+| `write-docs` | Adds or changes one page, and chooses where it goes. Asks first before adding a nav group or more than two pages. |
 | `review-docs` | Checks a page against the code and the page rules, using `check.py`. |
 | `plain-writing` | Lists the sentence rules, with lines that past reviews rejected. |
 

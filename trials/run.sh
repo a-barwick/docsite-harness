@@ -4,7 +4,7 @@
 # AGENT is opus, astra, wonder or grok. Output goes to trials/logs/ROUND and the worktree to ../docsite-trials/ROUND, next to this repo.
 set -u
 round=$1; repo=$(cd "$2" && pwd); agent=$3
-prompt=${4:-"Use the launch-docs skill to build this repo's docs site. Leave your changes uncommitted."}
+prompt=${4:-"Use the launch-docs skill to build this repo's docs site. Don't wait for outline approval. Leave your changes uncommitted."}
 here=$(cd "$(dirname "$0")/.." && pwd)
 name=$(basename "$repo")-$agent
 tree=$(dirname "$here")/docsite-trials/$round/$name

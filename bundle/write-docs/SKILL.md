@@ -24,6 +24,7 @@ List `docs/site/` and read `nav` in `docs/site/site-config.js`. Search the site 
 - If a page covers the topic, change that page and link to it from anywhere else that mentions the topic.
 - Create a page only for a topic that has no home. Add it to the matching `nav` group, and to a group named `Planned` if none of it is built.
 - A page covers one topic. If the topic won't fit in about 800 words, plan two pages.
+- If the change adds a `nav` group, moves pages between groups, or adds more than two pages, send the new `nav` in chat with the question each new page answers, and wait for approval before writing.
 
 ## 3. Get the facts from the code
 
